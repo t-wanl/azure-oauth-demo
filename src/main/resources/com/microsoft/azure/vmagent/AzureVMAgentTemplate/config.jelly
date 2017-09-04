@@ -1,0 +1,213 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:c="/lib/credentials"
+         xmlns:f="/lib/form" xmlns:ui="/ui">
+    <table width="100%">
+        <f:section title="${%General_Configuration}">
+            <f:entry title="${%Template_Name}" field="templateName"
+                     help="/plugin/azure-vm-agents/help-templateName.html">
+                <f:textbox/>
+            </f:entry>
+
+            <f:entry title="${%Template_Description}" field="templateDesc"
+                     help="/plugin/azure-vm-agents/help-templateDesc.html">
+                <f:textbox/>
+            </f:entry>
+
+            <f:entry title="${%Agent_Workspace}" field="agentWorkspace"
+                     help="/plugin/azure-vm-agents/help-agentWorkspace.html">
+                <f:textbox/>
+            </f:entry>
+
+            <f:entry title="${%Labels}" field="labels" help="/plugin/azure-vm-agents/help-labels.html">
+                <f:textbox/>
+            </f:entry>
+
+            <f:entry title="${%Location}" field="location" help="/plugin/azure-vm-agents/help-location.html">
+                <f:select/>
+            </f:entry>
+
+            <f:entry title="${%Virtual_Machine_Size}" field="virtualMachineSize"
+                     help="/plugin/azure-vm-agents/help-virtualMachineSize.html">
+                <f:select/>
+            </f:entry>
+
+            <f:entry title="${%Storage_Account_Type}" field="storageAccountType"
+                     help="/plugin/azure-vm-agents/help-storageAccountType.html">
+                <f:select/>
+            </f:entry>
+
+            <f:entry title="${%Storage_Account_Name}">
+                <ui:radioBlock name="storageAccountNameReferenceType" value="new" title="${%Storage_Account_Create_New}" checked="${instance == null || instance.isStorageAccountNameReferenceTypeEquals('new')}" inline="true">
+                    <f:entry field="newStorageAccountName" help="/plugin/azure-vm-agents/help-storageAccountName.html">
+                        <f:textbox/>
+                    </f:entry>
+                </ui:radioBlock>
+
+                <ui:radioBlock name="storageAccountNameReferenceType" value="existing" title="${%Storage_Account_Use_Exist}" checked="${instance.isStorageAccountNameReferenceTypeEquals('existing')}" inline="true">
+                    <f:entry field="existingStorageAccountName" help="/plugin/azure-vm-agents/help-storageAccountName.html">
+                        <f:select/>
+                    </f:entry>
+                </ui:radioBlock>
+            </f:entry>
+
+            <f:entry title="${%Disk_Type}" field="diskType" help="/plugin/azure-vm-agents/help-diskType.html">
+                <f:select/>
+            </f:entry>
+
+            <f:entry title="${%RetentionTimeInMin}" field="retentionTimeInMin"
+                     help="/plugin/azure-vm-agents/help-retentionTimeInMin.html">
+                <f:textbox default="60"/>
+            </f:entry>
+
+            <f:entry title="${%shutdownOnIdle}" field="shutdownOnIdle"
+                     help="/plugin/azure-vm-agents/help-shutdownOnIdle.html">
+                <f:checkbox/>
+            </f:entry>
+
+            <f:entry title="${%Usage}" field="usageMode" help="/plugin/azure-vm-agents/help-slaveMode.html">
+                <f:select/>
+            </f:entry>
+        </f:section>
+
+        <f:section title="${%Image_Configuration}">
+            <ui:radioBlock name="imageTopLevelType" value="basic" title="${%Built_In_Image}" checked="${instance == null || instance.isTopLevelType('basic')}"
+                          inline="true">
+                <f:entry field="builtInImage">
+                    <f:select/>
+                </f:entry>
+
+                <f:section title="${%Pre_Installed_Tools}">
+                    <f:entry title="Install Git (Latest)" field="isInstallGit">
+                        <f:checkbox/>
+                    </f:entry>
+
+                    <f:entry title="Install Maven (V3.5.0)" field="isInstallMaven">
+                        <f:checkbox/>
+                    </f:entry>
+
+                    <f:entry title="Install Docker (Only for Linux)" field="isInstallDocker">
+                        <f:checkbox/>
+                    </f:entry>
+                </f:section>
+            </ui:radioBlock>
+
+            <ui:radioBlock name="imageTopLevelType" value="advanced" title="${%Advanced_Image}" checked="${instance.isTopLevelType('advanced')}" inline="true">
+                <ui:dropdownList selectedName="imageReferenceType" name="imageReferenceTypeClass">
+                    <f:dropdownListBlock title="${%Custom_Image}" value="custom" selected="${instance == null || instance.isType('custom')}">
+                        <f:entry title="${%Image}" field="image" help="/plugin/azure-vm-agents/help-image.html">
+                            <f:textbox/>
+                        </f:entry>
+                    </f:dropdownListBlock>
+
+                    <f:dropdownListBlock title="${%Marketplace_Image}" value="reference" selected="${instance.isType('reference')}">
+                        <f:entry title="${%Image_Publisher}" field="imagePublisher"
+                                 help="/plugin/azure-vm-agents/help-imageReference.html">
+                            <f:textbox/>
+                        </f:entry>
+                        <f:entry title="${%Image_Offer}" field="imageOffer"
+                                 help="/plugin/azure-vm-agents/help-imageReference.html">
+                            <f:textbox/>
+                        </f:entry>
+                        <f:entry title="${%Image_Sku}" field="imageSku" help="/plugin/azure-vm-agents/help-imageReference.html">
+                            <f:textbox/>
+                        </f:entry>
+                        <f:entry title="${%Image_Version}" field="imageVersion"
+                                 help="/plugin/azure-vm-agents/help-imageReference.html">
+                            <f:textbox default="latest"/>
+                        </f:entry>
+                    </f:dropdownListBlock>
+                </ui:dropdownList>
+
+                <f:entry title="${%Os_Type}" field="osType" help="/plugin/azure-vm-agents/help-osType.html">
+                    <f:select/>
+                </f:entry>
+
+                <f:entry title="${%Launch_Method}" field="agentLaunchMethod"
+                         help="/plugin/azure-vm-agents/help-agentLaunchMethod.html">
+                    <f:select/>
+                </f:entry>
+
+                <f:entry title="${%Pre_Install_Ssh}" field="preInstallSsh"
+                                         help="/plugin/azure-vm-agents/help-preInstallSsh.html">
+                    <f:checkbox default="true"/>
+                </f:entry>
+
+                <f:section title="${%Initialization_Configuration}">
+                    <f:entry title="${%Init_Script}" field="initScript" help="/plugin/azure-vm-agents/help-initScript.html">
+                        <f:textarea/>
+                    </f:entry>
+
+                    <f:entry title="${%Execute_Init_Script_As_Root}" field="executeInitScriptAsRoot"
+                             help="/plugin/azure-vm-agents/help-executeInitScriptAsRoot.html">
+                        <f:checkbox default="true"/>
+                    </f:entry>
+
+                    <f:entry title="${%Do_Not_Use_Machine_If_Init_Fails}" field="doNotUseMachineIfInitFails"
+                             help="/plugin/azure-vm-agents/help-doNotUseMachineIfInitFails.html">
+                        <f:checkbox default="true"/>
+                    </f:entry>
+                </f:section>
+
+                <f:advanced>
+                    <f:entry title="${%VirtualNetwork_Name}" field="virtualNetworkName"
+                             help="/plugin/azure-vm-agents/help-virtualNetworkName.html">
+                        <f:textbox/>
+                    </f:entry>
+
+                    <f:entry title="${%VirtualNetworkResourceGroup_Name}" field="virtualNetworkResourceGroupName"
+                             help="/plugin/azure-vm-agents/help-virtualNetworkResourceGroupName.html">
+                        <f:textbox/>
+                    </f:entry>
+
+                    <f:entry title="${%Subnet_Name}" field="subnetName" help="/plugin/azure-vm-agents/help-subnetName.html">
+                        <f:textbox/>
+                    </f:entry>
+
+                    <f:entry title="${%Use_Private_Ip}" field="usePrivateIP"
+                             help="/plugin/azure-vm-agents/help-agentPrivateIp.html">
+                        <f:checkbox default="false"/>
+                    </f:entry>
+
+                    <f:entry title="${%NSG_Name}" field="nsgName" help="/plugin/azure-vm-agents/help-nsgName.html">
+                        <f:textbox/>
+                    </f:entry>
+
+
+                    <f:entry title="${%JVM_Options}" field="jvmOptions" help="/plugin/azure-vm-agents/help-jvmOptions.html">
+                        <f:textbox/>
+                    </f:entry>
+
+                    <f:entry title="${%noOfParallelJobs}" field="noOfParallelJobs"
+                             help="/plugin/azure-vm-agents/help-noOfParallelJobs.html">
+                        <f:textbox default="${descriptor.getDefaultNoOfExecutors()}"/>
+                    </f:entry>
+
+                    <f:entry title="${%Template_Is_Disabled}" field="templateDisabled"
+                             help="/plugin/azure-vm-agents/help-templateDisabled.html">
+                        <f:checkbox/>
+                    </f:entry>
+
+                    <f:entry title="${%Template_Status_Details}" field="templateStatusDetails"
+                             help="/plugin/azure-vm-agents/help-templateStatusDetails.html">
+                        <f:textarea/>
+                    </f:entry>
+                </f:advanced>
+            </ui:radioBlock>
+        </f:section>
+
+        <f:section title="${%Admin_Credentials}">
+            <f:entry title="${%Admin_Credentials}" field="credentialsId"
+                     help="/plugin/azure-vm-agents/help-credentials.html">
+                <c:select expressionAllowed="false"/>
+            </f:entry>
+        </f:section>
+
+        <f:entry title="">
+            <div align="right">
+                <f:repeatableDeleteButton value="${%Delete_Template}"/>
+            </div>
+        </f:entry>
+        <f:validateButton title="${%Verify_Template}" progress="${%Verifying_Template_MSG}" method="verifyConfiguration"
+                          with="azureCredentialsId,resourceGroupReferenceType,newResourceGroupName,existingResourceGroupName,maxVirtualMachinesLimit,deploymentTimeout,templateName,labels,location,virtualMachineSize,storageAccountNameReferenceType,newStorageAccountName,existingStorageAccountName,storageAccountType,noOfParallelJobs,imageTopLevelType,builtInImage,image,osType,imagePublisher,imageOffer,imageSku,imageVersion,agentLaunchMethod,initScript,credentialsId,virtualNetworkName,virtualNetworkResourceGroupName,subnetName,usePrivateIP,nsgName,retentionTimeInMin,jvmOptions,imageReferenceType"/>
+    </table>
+</j:jelly>

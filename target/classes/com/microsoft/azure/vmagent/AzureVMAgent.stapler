@@ -1,0 +1,2 @@
+#Tue Sep 05 01:35:21 CST 2017
+constructor=name,templateName,nodeDescription,osType,remoteFS,numExecutors,mode,label,launcher,retentionStrategy,nodeProperties,cloudName,vmCredentialsId,sshPrivateKey,sshPassPhrase,jvmOptions,shutdownOnIdle,eligibleForReuse,deploymentName,retentionTimeInMin,initScript,azureCredentialsId,servicePrincipal,agentLaunchMethod,cleanUpAction,cleanUpReason,resourceGroupName,executeInitScriptAsRoot,doNotUseMachineIfInitFails

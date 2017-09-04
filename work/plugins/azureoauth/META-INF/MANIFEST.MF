@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: albertxavier
+Build-Jdk: 1.8.0_45
+Extension-Name: azure-oauth
+Specification-Title: A Jenkins authentication plugin that delegates to
+  Azure OAuth
+Implementation-Title: azure-oauth
+Implementation-Version: 1.0-SNAPSHOT
+Group-Id: com.microsoft.azure
+Short-Name: azure-oauth
+Long-Name: Azure OAuth Plugin
+Plugin-Version: 1.0-SNAPSHOT (private-95c821bd-albertxavier)
+Hudson-Version: 1.653
+Jenkins-Version: 1.653
+Plugin-Dependencies: credentials:2.1.7
+Plugin-Developers: Wanpeng Li:t-wanl:t-wanl@microsoft.com
+
